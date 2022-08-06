@@ -86,3 +86,8 @@
 
   5. html형태의 문자열에서 텍스트 찾기
     : .get_text()
+
+  6. 날짜 불러오기
+    : from datetime import datetime
+    : 현재 날짜 - datetime.today()
+    : 현재 날짜 세부 정보 - datetime.today().year/month/day
