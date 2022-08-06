@@ -19,17 +19,70 @@
  1. requests
   : python으로 HTTP 호출하는 프로그램을 작성 할 때 사용 (서버 ↔ 클라이언트 데이터 주고 받기)
   : Crawling에서 주로 get함수를 통해 웹페이지의 html 코드 전체를 불러옴.
+  
+  사용법)
+    - requests.get("해당 URL")
+
+  예시)
+    - requests.get("https://naver.com") 
 
  2. BeautifulSoup
-  : 문자열을 실제 html 코드로 변환하고, html 효율적 탐색 후 원하는 정보 추출
+  : 문자열을 실제 html 코드로 변환
+  : html 효율적 탐색 후 원하는 정보 추출
 
-- Crawling한 데이터 저장 방법 및 젎차 ?
- 1. 파일 열기 : open("FILE NAME","auth")
+  사용 방법)
+    - HTML 코드로 반환법 : bs4.BeautifulSoup(HTML형식의 문자열 or 파일,"html.parse")
+    - HTML 코드에서 원하는 정보 하나 추출법  : .find("Tag","Selector")
+    - HTML 코드에서 원하는 정보 여러가지 추출법 : .find_all("Tag","Selector")
+
+  예시) 
+    - bs4.BeautifulSoup(response.text,'html.parser')
+    - .find("div",{"class","nums"})
+    - .find_all("div",{"class","nums"})
+
+- Crawling한 데이터 저장 방법 및 절차 ?
+ 1. 파일 열기 : open("FILE NAME","NODE")
  2. 파일 작성 : write(DATA)
  3. 파일 닫기 : close()
+ 4. 열기 모드 :
+  - r 파일 읽기, 파일 없을 시 에러
+  - w 파일 쓰기, 있으면 지우고 새롭게 씀, 없으면 생성함
+  - a 파일에 추가, 없으면 생성함
+  - r+ 파일 읽기, 수정
+  - a+ 파일 읽기, 끝에 추가 없으면 생성
+  - t 파일을 문자 단위로 처리 , 기본 값임.
+  - b 파일을 비트 단위로 처리 , 모드 표기 추가
 
- 예시) 
+  읽기 방법)
+    - read() 처음~끝 문자 단위로 읽어서 문자열로 반환, 바이너리 파일도 적용 -> 
+    - readline() 현재 위치 ~ 한 줄 단위로 읽어서 문자열로 반환 -> '~\n'
+    - readlines() 현재 위치 ~ 끝, 한 줄 단위로  읽어서 문자열로 반환 -> ['~\n','~\n']
+
+  쓰기 방법)
+    - write() 문자열 쓰기, 바이너리 파일에도 사용 -> f.write("asd") -> 문자 반환
+    - write.lines() 문자열이나 리스트의 내용을 모두 쓰기 -> f.writelines() -> 반환 없음
+
+  예시) 
     file = open("newfile.txt","w")
     for i in range(1,11):
         file.write(data)
     file.close()
+
+
+- TIP ?
+  1. 딕셔너리 생성, 추가 
+    : 생성 - dict = {} 
+    : 추가 - dict["key"] = value
+  
+  2. 중첩 딕셔너리 생성, 추가
+    : 생성 - dict['key'] = {}
+    : 추가 - dict['key']['key'] = value
+
+  3. 단일 카피 (얕은 복사 - 전체 id 값은 다르나 내부 자료형의 id 값이 다르다.)
+    : 변수2 = copy.copy(변수1)
+
+  4. 완전 카피 (깊은 복사 - 전체 id 값과 내부 자료형의 id 값이 다르다.)
+    : 변수2 = copy.deepcopy(변수1)
+
+  5. html형태의 문자열에서 텍스트 찾기
+    : .get_text()
