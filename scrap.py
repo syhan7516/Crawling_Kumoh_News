@@ -4,6 +4,9 @@ import requests
 # bs4 모듈 import
 import bs4
 
+# 외부 파일 불러오기
+import export_module
+
 # 뉴스 저장 객체
 news = {}
 
@@ -23,10 +26,15 @@ contents_date = result_html.find_all("span",{"class":"info"})
 
 # 원하는 정보 딕셔너리로 추가하기
 for content in range(0,10):
-    news[str(content)] = {} 
-    news[str(content)]["date"]= contents_date[content].get_text()
-    news[str(content)]["company"] = contents_company[content].get_text()
-    news[str(content)]["title"] = contents_title[content]["title"]
+    # 기사 제목에 금오공대 포함된 것만 가져오기
+    if "금오공대" in contents_title[content]["title"]:
+        news[str(content)] = {} 
+        
+        # 날짜 포맷팅
+        date = export_module.date_formatting(contents_date[content].get_text())
+        news[str(content)]["date"]= date
+        news[str(content)]["company"] = contents_company[content].get_text()
+        news[str(content)]["title"] = contents_title[content]["title"]
 
 for new in news:
     print(news[new])

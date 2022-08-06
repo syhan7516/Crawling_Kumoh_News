@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Update & Issue Menu
+/UpdateMenu.txt
